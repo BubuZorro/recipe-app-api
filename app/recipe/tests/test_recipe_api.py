@@ -113,8 +113,10 @@ class PrivateRecipeAPITests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         recipe = Recipe.objects.get(id=res.data['id'])
-        for k, v in payload.items():                                # For k = key, v = value in payload - Looped for each
-            self.assertEqual(getattr(recipe, k), v)                 # So k = 'title' and v = 'Sample recipe' (result assigned to that k)
+        for k, v in payload.items():
+            self.assertEqual(getattr(recipe, k), v)
+        # For k = key, v = value in payload -Looped for each-
+        # So k = 'title' and v = 'Sample recipe' (result assigned to that k)
         self.assertEqual(recipe.user, self.user)
 
     def test_partial_update(self):
@@ -126,7 +128,7 @@ class PrivateRecipeAPITests(TestCase):
             link=original_link,
         )
 
-        payload = {'title':'New recipe title'}
+        payload = {'title': 'New recipe title'}
         url = detail_url(recipe.id)
         res = self.client.patch(url, payload)
 
