@@ -22,18 +22,18 @@ def detail_url(ingredient_id):
 
 
 def create_user(email='user@example.com', password='testpass123'):
-    """"Crate and return a user."""
-    return get_user_model().objects.create(email=email, password=password)
+    """Create and return user."""
+    return get_user_model().objects.create_user(email=email, password=password)
 
 
 class PublicIngredientsApiTests(TestCase):
-    """Test unathenticated API requests."""
+    """Test unauthenticated API requests."""
 
     def setUp(self):
         self.client = APIClient()
 
     def test_auth_required(self):
-        """Test auth is required fro retrieving ingredients."""
+        """Test auth is required for retrieving ingredients."""
         res = self.client.get(INGREDIENTS_URL)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)

@@ -23,24 +23,24 @@ def detail_url(tag_id):
 
 def create_user(email='user@example.com', password='testpass123'):
     """Create and return a user."""
-    return get_user_model().objects.create(email=email, password=password)
+    return get_user_model().objects.create_user(email=email, password=password)
 
 
 class PublicTagsApiTests(TestCase):
-    """Test unathenticated API requests."""
+    """Test unauthenticated API requests."""
 
     def setUp(self):
         self.client = APIClient()
 
     def test_auth_required(self):
-        """Test auth required."""
+        """Test auth is required for retrieving tags."""
         res = self.client.get(TAGS_URL)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class PrivateTagsApiTests(TestCase):
-    """Test athenticated API requests."""
+    """Test authenticated API requests."""
 
     def setUp(self):
         self.user = create_user()
@@ -56,7 +56,6 @@ class PrivateTagsApiTests(TestCase):
 
         tags = Tag.objects.all().order_by('-name')
         serializer = TagSerializer(tags, many=True)
-
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
 
