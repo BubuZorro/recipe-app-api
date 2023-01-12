@@ -27,7 +27,7 @@ from recipe import serializers
 
 @extend_schema_view(
     list=extend_schema(
-        parameters=(
+        parameters=[
             OpenApiParameter(
                 'tags',
                 OpenApiTypes.STR,
@@ -38,7 +38,7 @@ from recipe import serializers
                 OpenApiTypes.STR,
                 description='Comma separated list of ingredient IDs to filter',
             )
-        )
+        ]
     )
 )
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -96,13 +96,13 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 @extend_schema_view(
     list=extend_schema(
-        parameters=(
+        parameters=[
             OpenApiParameter(
                 'assigned_only',
                 OpenApiTypes.INT, enum=[0, 1],
                 description='Filter by items assigned to recipes.',
             )
-        )
+        ]
     )
 )
 class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
